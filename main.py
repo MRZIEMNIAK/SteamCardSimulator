@@ -21,11 +21,10 @@ def main():
         drops = simulation.simulate_card_drops(selected_game) #simulate the card drops for the selected game
         if drops:
             print("You received the following cards:")
-            for card in drops:
-                print (f"- {card}")
-            
-            else:
-                print("No cards remaining.")
+            for cards in drops:
+                print (f"- {cards}")
+        else:
+            print("No cards remaining.")
     else:        
         print("Invalid choice. Please select a valid game number.")
 
@@ -40,8 +39,8 @@ def view_collection():
     collection = storage.load_collection() #load the user's card collection from storage
     if collection:
         print("Your card collection:")
-        for card in collection:
-            print(f"- {card}")
+        for cards in collection:
+            print(f"- {cards}")
     else:
         print("Your card collection is empty.")
 
