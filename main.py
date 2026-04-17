@@ -18,7 +18,12 @@ def main():
         print(f"{idx + 1}. {games['name']}")
     
     while True:
-        choice = int(input("Select a game by entering its number: "))  # get the user's choice of game
+        raw_choice = input("Select a game to play by entering its number: ").strip()
+        if not raw_choice.isdigit():
+            print("Invalid entry. Please enter a game number.")
+            continue
+
+        choice = int(raw_choice)
         if 1 <= choice <= len(state.games):  # check if the user's choice is valid
             selected_game = state.games[choice - 1]  # get the selected game based on the user's choice
             drops = simulation.simulate_card_drops(selected_game)  # simulate the card drops for the selected game
@@ -28,23 +33,30 @@ def main():
                     print(f"- {cards}")
                 collection.extend(drops)  # Add drops to in-memory collection
             else:
-                print("No cards remaining.")
+                print("You didn't receive any cards. Play more to increase your chances!")
             
-            continue_choice = input("Do you want to select another game? (y for yes, n for no): ").lower()
+            while True:
+                continue_choice = input("Do you want to play another game? (y for yes, n for no): ").strip().lower()
+                if continue_choice == 'y':
+                    break
+                elif continue_choice == 'n':
+                    break
+                else:
+                    print("Invalid choice. Please enter 'y' or 'n'.")
+
             if continue_choice == 'y':
                 continue
-            elif continue_choice == 'n':
-                break
             else:
-                print("Invalid choice. Please enter 'y' or 'n'.")
+                break
+
         else:
-            print("Invalid choice. Please select a valid game number.")
+            print("No game found. Please select a valid game.")
     
     for _ in range(10):  # Simulate 10 ticks of card drops for all games
         simulation.simulate_tick()
     
     while True:
-        choice_view = input("Do you want to view your card collection? (y for yes, n for no): ").lower()
+        choice_view = input("Do you want to view your card collection? (y for yes, n for no): ").strip().lower()
         if choice_view == 'y':
             if collection:
                 print("Your card collection:")
