@@ -9,7 +9,7 @@ import state #contains the list of games and their respective card drops and dro
 import simulation #contains the function to simulate card drops
 import storage #contains functions to save and load the state of the simulator, such as the user's card collection and the games they have played
 import utils #contains utility functions for the simulator, such as checking for card drops and calculating progress towards completing a card collection
-import os
+
 
 def main():
     collection = []  # In-memory collection for this run
@@ -46,6 +46,9 @@ def main():
                 
                 progress = utils.calculate_progress(collection, sum(game["total_cards"] for game in state.games))
                 print(f"Progress towards completing a card collection: {progress:.2f}%")
+                
+                game_progress = utils.calculate_game_progress(collection, selected_game)
+                print(f"Progress for {selected_game['name']}: {game_progress:.2f}%")
 
             else:
                 print("You didn't receive any cards. Play more to increase your chances!")
@@ -72,6 +75,10 @@ def main():
                             else:
                                 print(f"- {card['name']} ({card.get('value', 0)} gems)")
                         print(f"Total collection value: {total_collection_value} gems")
+                        print("Progress per game:")
+                        for game in state.games:
+                            progress = utils.calculate_game_progress(collection, game)
+                            print(f"- {game['name']}: {progress:.2f}%")
                         print("sell cards: press 's' to sell cards for gems")
                         print("save collection: press 'v' to save your collection")
                         print("load collection: press 'l' to load your collection")
