@@ -16,10 +16,15 @@ def simulate_card_drops(game):
 
     for cards in game["cards"]:
         if random.random() < cards["drop_rate"]:
-            drops.append(cards["name"])
+            drops.append({"name": cards["name"], "rarity": cards.get("rarity", "common"), "value": cards.get("value", 5)})
+
+    for cards in game.get("rare_cards", []):
+        if random.random() < cards["drop_rate"]:
+            drops.append({"name": cards["name"], "rarity": cards.get("rarity", "rare"), "value": cards.get("value", 10)})
+
     return drops
 
 def simulate_tick():
-    for game in state.games:
-        dropped = simulate_card_drops(game)
-        game["total_cards"] += len(dropped)
+    for games in state.games:
+        dropped = simulate_card_drops(games)
+        games["total_cards"] += len(dropped)
