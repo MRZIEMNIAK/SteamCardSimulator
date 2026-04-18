@@ -9,12 +9,14 @@ import state #contains the list of games and their respective card drops and dro
 import simulation #contains the function to simulate card drops
 import storage #contains functions to save and load the state of the simulator, such as the user's card collection and the games they have played
 import utils #contains utility functions for the simulator, such as checking for card drops and calculating progress towards completing a card collection
+import os
 
 def main():
     collection = []  # In-memory collection for this run
     print("Steam card simulator")
     
     while True:
+        print('\033c', end='')
         print("Available games:")
         
         for idx, games in enumerate(state.games):  # print the list of games with their respective indices
@@ -58,10 +60,18 @@ def main():
                     
                     break
                 elif continue_choice == 'n':
+                    print('\033c', end='')
                     if collection:
                         print("Your card collection:")
+                        total_collection_value = 0
                         for card in collection:
-                            print(f"- {card}")
+                            total_collection_value += card.get("value", 0)
+                            rarity_label = card.get("rarity", "common").capitalize()
+                            if rarity_label == "Rare":
+                                print(f"- {card['name']} [{rarity_label}] ({card.get('value', 0)} gems)")
+                            else:
+                                print(f"- {card['name']} ({card.get('value', 0)} gems)")
+                        print(f"Total collection value: {total_collection_value} gems")
                         print("sell cards: press 's' to sell cards for gems")
                         print("save collection: press 'v' to save your collection")
                         print("load collection: press 'l' to load your collection")
@@ -92,31 +102,6 @@ def main():
 
         else:
             print("No game found. Please select a valid game.")
-    
-
-    for _ in range(10):  # Simulate 10 ticks of card drops for all games
-        simulation.simulate_tick()
-    
-    while True:
-        choice_view = input("Do you want to view your card collection? (y for yes, n for no): ").strip().lower()
-        if choice_view == 'y':
-            if collection:
-                print("Your card collection:")
-                total_collection_value = 0
-                for card in collection:
-                    total_collection_value += card.get("value", 0)
-                    rarity_label = card.get("rarity", "common").capitalize()
-                    if rarity_label == "Rare":
-                        print(f"- {card['name']} [{rarity_label}] ({card.get('value', 0)} gems)")
-                    else:
-                        print(f"- {card['name']} ({card.get('value', 0)} gems)")
-                print(f"Total collection value: {total_collection_value} gems")
-            else:
-                print("Your card collection is empty.")
-        elif choice_view == 'n':
-            break
-        else:
-            print("Invalid choice. Please enter 'y' or 'n'.")
 
 
 

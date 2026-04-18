@@ -1,5 +1,8 @@
 # game state management
 
+import random
+import utils
+
 #cards id, name, drop_rate, rarity, value
 def _cards(*entries, rarity="common", value=None):
     """Build card dicts from tuples: (name, drop_rate)."""
@@ -27,7 +30,7 @@ games = [
             ("Immortal Invoker", 0.03),
             rarity="rare",
         ),
-        "total_cards": 0,
+        "total_cards": random.randint(utils.MIN_CARDS_PER_GAME, utils.MAX_CARDS_PER_GAME),
     },
     {
         "id": 2,
@@ -44,7 +47,7 @@ games = [
             ("Strange Spy", 0.03),
             rarity="rare",
         ),
-        "total_cards": 0,
+        "total_cards": random.randint(utils.MIN_CARDS_PER_GAME, utils.MAX_CARDS_PER_GAME),
     },
     {
         "id": 3,
@@ -61,7 +64,7 @@ games = [
             ("Ancient Mirage", 0.04),
             rarity="rare",
         ),
-        "total_cards": 0,
+        "total_cards": random.randint(utils.MIN_CARDS_PER_GAME, utils.MAX_CARDS_PER_GAME),
     },
     {
         "id": 4,
@@ -78,7 +81,7 @@ games = [
             ("Overkill Heist", 0.03),
             rarity="rare",
         ),
-        "total_cards": 0,
+        "total_cards": random.randint(utils.MIN_CARDS_PER_GAME, utils.MAX_CARDS_PER_GAME),
     },
     {
         "id": 5,
@@ -95,7 +98,7 @@ games = [
             ("Aperture Prototype", 0.03),
             rarity="rare",
         ),
-        "total_cards": 0,
+        "total_cards": random.randint(utils.MIN_CARDS_PER_GAME, utils.MAX_CARDS_PER_GAME),
     },
     {
         "id": 6,
@@ -112,7 +115,7 @@ games = [
             ("Last Stand Rochelle", 0.04),
             rarity="rare",
         ),
-        "total_cards": 0,
+        "total_cards": random.randint(utils.MIN_CARDS_PER_GAME, utils.MAX_CARDS_PER_GAME),
     },
 ]
 
