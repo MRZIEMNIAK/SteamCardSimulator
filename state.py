@@ -1,15 +1,16 @@
 # game state management
 
-
-def _cards(*entries):
+#cards id, name, drop_rate, rarity, value
+def _cards(*entries, rarity="common", value=None):
     """Build card dicts from tuples: (name, drop_rate)."""
+    card_value = value if value is not None else (10 if rarity == "rare" else 5)
     return [
-        {"id": idx + 1, "name": name, "drop_rate": drop_rate}
+        {"id": idx + 1, "name": name, "drop_rate": drop_rate, "rarity": rarity, "value": card_value}
         for idx, (name, drop_rate) in enumerate(entries)
     ]
 
 
-#list of games and their respective card drops and drop rates
+#list of games and their respective card drops, drop rates
 games = [
     {
         "id": 1,
@@ -20,6 +21,11 @@ games = [
             ("Crystal Maiden", 0.22),
             ("Pudge", 0.15),
             ("Juggernaut", 0.18),
+        ),
+        "rare_cards": _cards(
+            ("Arcana Axe", 0.04),
+            ("Immortal Invoker", 0.03),
+            rarity="rare",
         ),
         "total_cards": 0,
     },
@@ -33,6 +39,11 @@ games = [
             ("Engineer", 0.19),
             ("Medic", 0.21),
         ),
+        "rare_cards": _cards(
+            ("Golden Scout", 0.04),
+            ("Strange Spy", 0.03),
+            rarity="rare",
+        ),
         "total_cards": 0,
     },
     {
@@ -44,6 +55,11 @@ games = [
             ("Inferno", 0.17),
             ("AWP", 0.13),
             ("Defuse Kit", 0.22),
+        ),
+        "rare_cards": _cards(
+            ("StatTrak AWP", 0.03),
+            ("Ancient Mirage", 0.04),
+            rarity="rare",
         ),
         "total_cards": 0,
     },
@@ -57,6 +73,11 @@ games = [
             ("Clover", 0.16),
             ("The Heist", 0.19),
         ),
+        "rare_cards": _cards(
+            ("Diamond Dallas", 0.04),
+            ("Overkill Heist", 0.03),
+            rarity="rare",
+        ),
         "total_cards": 0,
     },
     {
@@ -69,6 +90,11 @@ games = [
             ("Atlas", 0.22),
             ("P-Body", 0.22),
         ),
+        "rare_cards": _cards(
+            ("Blue Portal", 0.04),
+            ("Aperture Prototype", 0.03),
+            rarity="rare",
+        ),
         "total_cards": 0,
     },
     {
@@ -80,6 +106,11 @@ games = [
             ("Nick", 0.18),
             ("Rochelle", 0.21),
             ("Tank", 0.10),
+        ),
+        "rare_cards": _cards(
+            ("Infected Tank", 0.03),
+            ("Last Stand Rochelle", 0.04),
+            rarity="rare",
         ),
         "total_cards": 0,
     },
