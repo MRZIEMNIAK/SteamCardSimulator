@@ -1,11 +1,14 @@
+"""
+Utility functions for the Steam Card Simulator.
+
+
+Otso
+"""
+
 # max tick, save file, load file, 
-
-
-
 # Muuttujat ja muuttumattomat arvot simulaatioon.
 
 import storage
-
 import state
 
 
@@ -32,7 +35,6 @@ def calculate_progress(dropped_cards, total_cards):
     if total_cards == 0:
         return 0
     return (len(dropped_cards) / total_cards) * 100
-
 
 
 def save_collection(collection):
