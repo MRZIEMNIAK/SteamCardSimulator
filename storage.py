@@ -1,7 +1,8 @@
 import json
 import os
 
-SAVE_FILE = "collection.json"  # File to save/load the collection
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SAVE_FILE = os.path.join(BASE_DIR, "collection.json")  # File to save/load the collection
 
 def save_state(collection, balance):
     """Save the user's card collection and gem balance to a JSON file."""
@@ -60,3 +61,15 @@ def load_state():
     except Exception as e:
         print(f"Error loading collection: {e}")
         return {"collection": [], "balance": 0}
+
+
+def delete_state():
+    """Delete the saved state file so neither balance nor collection remain."""
+    try:
+        if os.path.exists(SAVE_FILE):
+            os.remove(SAVE_FILE)
+            print("Saved collection deleted.")
+        else:
+            print("No saved collection file to delete.")
+    except Exception as e:
+        print(f"Error deleting saved collection: {e}")
