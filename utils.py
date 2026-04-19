@@ -46,3 +46,6 @@ def calculate_game_progress(collection, game):
 
 def load_collection():
     return storage.load_collection() #load the user's card collection from storage
+
+def save_collection(collection):
+    return storage.save_collection(collection) #save the user's card collection to storage
