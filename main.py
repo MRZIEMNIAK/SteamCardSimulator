@@ -86,52 +86,58 @@ def main():
                             else:
                                 print(f"- {card['name']} ({card.get('value', 0)} gems)")
                         print(f"Total collection value: {total_collection_value} gems")
-                        print("Progress per game:")
-                        
-                        for game in state.games:
-                            progress = utils.calculate_game_progress(collection, game)
-                            print(f"- {game['name']}: {progress:.2f}%")
-                        print("sell cards: press 's' to sell cards for gems")
-                        print(f"current gem balance: {balance} gems")
-                        print("save collection: press 'v' to save your collection")
-                        print("load collection: press 'l' to load your collection")
-                        print("play again: press 'p' to play another game")
-                        print("exit: press 'e' to exit the simulator")
-                        
-                        while True:
-                            action = input("Enter your choice: ").strip().lower()
-                            if action == 's':
-                                if collection:
-                                    sale_amount = sum(card.get("value", 0) for card in collection)
-                                    balance += sale_amount
-                                    collection = []
-                                    storage.save_state(collection, balance)
-                                    print(f"Sold all cards for {sale_amount} gems.")
-                                    print(f"Current balance: {balance} gems.")
-                                else:
-                                    print("No cards to sell.")
-                            
-                            elif action == 'v':
-                                storage.save_state(collection, balance)
-                                print("Collection saved.")                            
-                            elif action == 'l':
-                                loaded_state = storage.load_state()
-                                collection = loaded_state.get("collection", [])
-                                balance = loaded_state.get("balance", 0)
-                                print("Collection and balance loaded.")
-                            elif action == 'p':
-                                continue_choice = 'y'  # Set to 'y' to continue playing after viewing collection
-                                break
-                            
-                            elif action == 'e':
-                                print("Exiting the simulator. Goodbye!")
-                                return
-                            
-                            else:
-                                print("Invalid choice. Please enter 's', 'v', 'l', 'p' or 'e'.")
                     else:
                         print("Your card collection is empty.")
-                        break
+                        print("Total collection value: 0 gems")
+
+                    print("Progress per game:")
+                    for game in state.games:
+                        progress = utils.calculate_game_progress(collection, game)
+                        print(f"- {game['name']}: {progress:.2f}%")
+                    print("sell cards: press 's' to sell cards for gems")
+                    print(f"current gem balance: {balance} gems")
+                    print("save collection: press 'v' to save your collection")
+                    print("load collection: press 'l' to load your collection")
+                    print("delete saved collection: press 'd' to delete saved cards and balance")
+                    print("play again: press 'p' to play another game")
+                    print("exit: press 'e' to exit the simulator")
+                    
+                    while True:
+                        action = input("Enter your choice: ").strip().lower()
+                        if action == 's':
+                            if collection:
+                                sale_amount = sum(card.get("value", 0) for card in collection)
+                                balance += sale_amount
+                                collection = []
+                                storage.save_state(collection, balance)
+                                print(f"Sold all cards for {sale_amount} gems.")
+                                print(f"Current balance: {balance} gems.")
+                            else:
+                                print("No cards to sell.")
+                        
+                        elif action == 'v':
+                            storage.save_state(collection, balance)
+                            print("Collection saved.")                            
+                        elif action == 'l':
+                            loaded_state = storage.load_state()
+                            collection = loaded_state.get("collection", [])
+                            balance = loaded_state.get("balance", 0)
+                            print("Collection and balance loaded.")
+                        elif action == 'd':
+                            storage.delete_state()
+                            collection = []
+                            balance = 0
+                            print("Saved collection and balance deleted.")
+                        elif action == 'p':
+                            continue_choice = 'y'  # Set to 'y' to continue playing after viewing collection
+                            break
+                        
+                        elif action == 'e':
+                            print("Exiting the simulator. Goodbye!")
+                            return
+                        
+                        else:
+                            print("Invalid choice. Please enter 's', 'v', 'l', 'd', 'p' or 'e'.")
                 continue
 
         else:

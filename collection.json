@@ -1,10 +1,15 @@
 {
     "collection": [
         {
-            "name": "AWP",
+            "name": "Scout",
             "rarity": "common",
             "value": 5
+        },
+        {
+            "name": "Strange Spy",
+            "rarity": "rare",
+            "value": 10
         }
     ],
-    "balance": 10
+    "balance": 0
 }
