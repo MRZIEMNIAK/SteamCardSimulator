@@ -1,6 +1,11 @@
-# game state management
+"""
+Card and game catalog for the Steam Card Drop Simulator.
+Veikka
+"""
 
-#cards id, name, drop_rate, rarity, value
+import copy
+
+# cards id, name, drop_rate, rarity, value
 def _cards(*entries, rarity="common", value=None):
     """Build card dicts from tuples: (name, drop_rate)."""
     card_value = value if value is not None else (10 if rarity == "rare" else 5)
@@ -10,8 +15,8 @@ def _cards(*entries, rarity="common", value=None):
     ]
 
 
-#list of games and their respective card drops, drop rates
-games = [
+# list of games and their respective card drops, drop rates
+DEFAULT_GAMES = [
     {
         "id": 1,
         "name": "DOTA 2",
@@ -115,6 +120,8 @@ games = [
         "total_cards": 7,
     },
 ]
+
+games = copy.deepcopy(DEFAULT_GAMES)
 
 
 
