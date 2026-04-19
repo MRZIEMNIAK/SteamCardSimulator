@@ -101,10 +101,10 @@ def main():
                                 print("Selling cards for gems... (This feature is not implemented yet)")
                             
                             elif action == 'v':
-                                utils.save_collection(collection)
+                                storage.save_collection(collection)
                                 print("Collection saved.")                            
                             elif action == 'l':
-                                collection = utils.load_collection()
+                                collection = storage.load_collection()
                                 print("collection loaded.")
                             elif action == 'p':
                                 continue_choice = 'y'  # Set to 'y' to continue playing after viewing collection
