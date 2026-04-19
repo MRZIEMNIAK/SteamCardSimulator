@@ -1,17 +1,10 @@
-[
-    {
-        "name": "Inferno",
-        "rarity": "common",
-        "value": 5
-    },
-    {
-        "name": "Defuse Kit",
-        "rarity": "common",
-        "value": 5
-    },
-    {
-        "name": "Juggernaut",
-        "rarity": "common",
-        "value": 5
-    }
-]
+{
+    "collection": [
+        {
+            "name": "AWP",
+            "rarity": "common",
+            "value": 5
+        }
+    ],
+    "balance": 10
+}
