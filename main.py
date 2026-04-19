@@ -16,7 +16,7 @@ def main():
     print("Steam card simulator")
     
     while True:
-        print('\033c', end='')
+        print('\033c', end='') # Clear the console for better readability
         print("Available games:")
         
         for idx, games in enumerate(state.games):  # print the list of games with their respective indices
@@ -31,14 +31,18 @@ def main():
         if 1 <= choice <= len(state.games):  # check if the user's choice is valid
             selected_game = state.games[choice - 1]  # get the selected game based on the user's choice
             drops = simulation.simulate_card_drops(selected_game)  # simulate the card drops for the selected game
+            
             if drops:
                 print("You received the following cards:")
                 round_total_value = 0
+                
                 for cards in drops:
                     round_total_value += cards.get("value", 0)
                     rarity_label = cards.get("rarity", "common").capitalize()
+                    
                     if rarity_label == "Rare":
                         print(f"- {cards['name']} [{rarity_label}] ({cards.get('value', 0)} gems)")
+                    
                     else:
                         print(f"- {cards['name']} ({cards.get('value', 0)} gems)")
                 print(f"Total value this round: {round_total_value} gems")
@@ -59,23 +63,29 @@ def main():
                 if continue_choice == 'e':
                     print("Exiting the simulator. Goodbye!")
                     return
+                
                 if continue_choice == 'y':
-                    
                     break
+                
                 elif continue_choice == 'n':
                     print('\033c', end='')
+                    
                     if collection:
                         print("Your card collection:")
                         total_collection_value = 0
+                        
                         for card in collection:
                             total_collection_value += card.get("value", 0)
                             rarity_label = card.get("rarity", "common").capitalize()
+                            
                             if rarity_label == "Rare":
                                 print(f"- {card['name']} [{rarity_label}] ({card.get('value', 0)} gems)")
+                            
                             else:
                                 print(f"- {card['name']} ({card.get('value', 0)} gems)")
                         print(f"Total collection value: {total_collection_value} gems")
                         print("Progress per game:")
+                        
                         for game in state.games:
                             progress = utils.calculate_game_progress(collection, game)
                             print(f"- {game['name']}: {progress:.2f}%")
@@ -84,22 +94,26 @@ def main():
                         print("load collection: press 'l' to load your collection")
                         print("play again: press 'p' to play another game")
                         print("exit: press 'e' to exit the simulator")
+                        
                         while True:
                             action = input("Enter your choice: ").strip().lower()
                             if action == 's':
                                 print("Selling cards for gems... (This feature is not implemented yet)")
+                            
                             elif action == 'v':
                                 utils.save_collection(collection)
-                                print("Collection saved.")
+                                print("Collection saved.")                            
                             elif action == 'l':
                                 collection = utils.load_collection()
                                 print("collection loaded.")
                             elif action == 'p':
                                 continue_choice = 'y'  # Set to 'y' to continue playing after viewing collection
                                 break
+                            
                             elif action == 'e':
                                 print("Exiting the simulator. Goodbye!")
                                 return
+                            
                             else:
                                 print("Invalid choice. Please enter 's', 'v', 'l', 'p' or 'e'.")
                     else:
