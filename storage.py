@@ -3,39 +3,43 @@ import os
 
 SAVE_FILE = "collection.json"  # File to save/load the collection
 
-def save_collection(collection):
-    """Save the user's card collection to a JSON file without overwriting existing cards."""
+def save_state(collection, balance):
+    """Save the user's card collection and gem balance to a JSON file."""
     try:
-        existing = []
-        if os.path.exists(SAVE_FILE):
-            with open(SAVE_FILE, 'r') as f:
-                existing = json.load(f)
-            if not isinstance(existing, list):
-                existing = []
-
-        existing_keys = {(card.get("name"), card.get("rarity")) for card in existing}
-        new_cards = [card for card in collection if (card.get("name"), card.get("rarity")) not in existing_keys]
-        combined_collection = existing + new_cards
+        state_data = {
+            "collection": collection,
+            "balance": balance,
+        }
 
         with open(SAVE_FILE, 'w') as f:
-            json.dump(combined_collection, f, indent=4)
+            json.dump(state_data, f, indent=4)
 
-        if new_cards:
-            print(f"Collection saved successfully. Added {len(new_cards)} new card(s).")
-        else:
-            print("Collection saved successfully. No new cards were added.")
+        print("Collection saved successfully.")
+        print(f"Saved gem balance: {balance} gems.")
     except Exception as e:
         print(f"Error saving collection: {e}")
 
 
-def load_collection():
-    """Load the user's card collection from a JSON file."""
+def load_state():
+    """Load the user's card collection and gem balance from a JSON file."""
     if not os.path.exists(SAVE_FILE):
         print("No saved collection found. Starting with an empty collection.")
-        return []
+        return {"collection": [], "balance": 0}
+
     try:
         with open(SAVE_FILE, 'r') as f:
-            collection = json.load(f)
+            state_data = json.load(f)
+
+        if isinstance(state_data, list):
+            collection = state_data
+            balance = 0
+        elif isinstance(state_data, dict):
+            collection = state_data.get("collection", []) if isinstance(state_data.get("collection", []), list) else []
+            balance = state_data.get("balance", 0)
+        else:
+            collection = []
+            balance = 0
+
         print("Collection loaded successfully.")
         if collection:
             print("Loaded collection:")
@@ -50,7 +54,9 @@ def load_collection():
             print(f"Total collection value: {total_value} gems")
         else:
             print("Loaded collection is empty.")
-        return collection
+
+        print(f"Loaded gem balance: {balance} gems")
+        return {"collection": collection, "balance": balance}
     except Exception as e:
         print(f"Error loading collection: {e}")
-        return []
+        return {"collection": [], "balance": 0}

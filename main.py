@@ -12,7 +12,9 @@ import utils #contains utility functions for the simulator, such as checking for
 
 
 def main():
-    collection = []  # In-memory collection for this run
+    saved_state = storage.load_state()
+    collection = saved_state.get("collection", [])  # In-memory collection for this run
+    balance = saved_state.get("balance", 0)  # gems earned from selling cards
     print("Steam card simulator")
     
     while True:
@@ -90,6 +92,7 @@ def main():
                             progress = utils.calculate_game_progress(collection, game)
                             print(f"- {game['name']}: {progress:.2f}%")
                         print("sell cards: press 's' to sell cards for gems")
+                        print(f"current gem balance: {balance} gems")
                         print("save collection: press 'v' to save your collection")
                         print("load collection: press 'l' to load your collection")
                         print("play again: press 'p' to play another game")
@@ -98,14 +101,24 @@ def main():
                         while True:
                             action = input("Enter your choice: ").strip().lower()
                             if action == 's':
-                                print("Selling cards for gems... (This feature is not implemented yet)")
+                                if collection:
+                                    sale_amount = sum(card.get("value", 0) for card in collection)
+                                    balance += sale_amount
+                                    collection = []
+                                    storage.save_state(collection, balance)
+                                    print(f"Sold all cards for {sale_amount} gems.")
+                                    print(f"Current balance: {balance} gems.")
+                                else:
+                                    print("No cards to sell.")
                             
                             elif action == 'v':
-                                storage.save_collection(collection)
+                                storage.save_state(collection, balance)
                                 print("Collection saved.")                            
                             elif action == 'l':
-                                collection = storage.load_collection()
-                                print("collection loaded.")
+                                loaded_state = storage.load_state()
+                                collection = loaded_state.get("collection", [])
+                                balance = loaded_state.get("balance", 0)
+                                print("Collection and balance loaded.")
                             elif action == 'p':
                                 continue_choice = 'y'  # Set to 'y' to continue playing after viewing collection
                                 break

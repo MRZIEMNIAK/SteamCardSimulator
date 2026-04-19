@@ -42,10 +42,11 @@ def calculate_game_progress(collection, game):
     game_card_names = {card['name'] for card in game['cards'] + game['rare_cards']}
     collected_unique = {card['name'] for card in collection if card['name'] in game_card_names}
     return calculate_progress(list(collected_unique), game['total_cards'])
-    storage.save_collection(collection) #save the user's card collection to storage
+
 
 def load_collection():
-    return storage.load_collection() #load the user's card collection from storage
+    state_data = storage.load_state()  # load the user's card collection and balance from storage
+    return state_data.get("collection", [])
 
-def save_collection(collection):
-    return storage.save_collection(collection) #save the user's card collection to storage
+def save_collection(collection, balance=0):
+    return storage.save_state(collection, balance)  # save the user's card collection and balance to storage
