@@ -1,11 +1,5 @@
 {
-    "collection": [
-        {
-            "name": "Chains",
-            "rarity": "common",
-            "value": 5
-        }
-    ],
+    "collection": [],
     "balance": 0,
     "games": [
         {
@@ -355,6 +349,21 @@
                 }
             ],
             "total_cards": 7
+        },
+        {
+            "id": 7,
+            "name": "pabagi",
+            "cards": [],
+            "rare_cards": [
+                {
+                    "id": 1,
+                    "name": "fortinaiti",
+                    "drop_rate": 1.0,
+                    "rarity": "rare",
+                    "value": 100
+                }
+            ],
+            "total_cards": 1
         }
     ]
 }

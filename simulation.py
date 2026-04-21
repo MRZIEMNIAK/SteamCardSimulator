@@ -24,6 +24,8 @@ def simulate_card_drops(game):
 
     return drops
 
+
+#Ticks are not implemented yet
 def simulate_tick():
     all_drops = []
     for games in state.games:
