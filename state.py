@@ -1,5 +1,6 @@
 """
 Card and game catalog for the Steam Card Drop Simulator.
+
 Veikka
 """
 
@@ -15,7 +16,7 @@ def _cards(*entries, rarity="common", value=None):
     ]
 
 
-# list of games and their respective card drops, drop rates
+# list of default games and their respective card drops, drop rates
 DEFAULT_GAMES = [
     {
         "id": 1,

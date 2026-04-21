@@ -1,6 +1,5 @@
 """
-Utility functions for the Steam Card Simulator.
-
+Utility functions for the Simulator
 
 Otso
 """
@@ -10,7 +9,6 @@ Otso
 
 import storage
 import state
-
 
 
 MAX_TICK = 10 # suurin tick speedi. (Saa muuttaa tarpeiden mukaan)
@@ -50,3 +48,15 @@ def load_collection():
 
 def save_collection(collection, balance=0):
     return storage.save_state(collection, balance)  # save the user's card collection and balance to storage
+
+
+def save_all_state(collection, balance):
+    storage.save_state(collection, balance, state.games)
+
+
+def get_valid_choice(valid_choices):
+    while True:
+        action = input("Select a choice: ").strip().lower()
+        if action in valid_choices:
+            return action
+        print("\nInvalid Input. Try again: ")
