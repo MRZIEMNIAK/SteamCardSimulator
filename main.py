@@ -87,7 +87,7 @@ def main():
                 collection.extend(drops)  # Add drops to in-memory collection
                 utils.save_all_state(collection, balance)
                 
-                progress = utils.calculate_progress(collection, sum(game["total_cards"] for game in state.games))
+                progress = utils.calculate_progress(list(set(card['name'] for card in collection)), sum(game["total_cards"] for game in state.games))
                 print(f"Progress towards completing a card collection: {progress:.2f}%")
                 
                 game_progress = utils.calculate_game_progress(collection, selected_game)
@@ -97,7 +97,7 @@ def main():
                 print("You didn't receive any cards. Play more to increase your chances!")
             
             while True:
-                continue_choice = input("Play another game (y), view inventory (n), exit (e): ").strip().lower()
+                continue_choice = input("Play another game (y), view inventory (i), exit (e): ").strip().lower()
 
                 if continue_choice == 'e':
                     utils.save_all_state(collection, balance)
@@ -107,7 +107,7 @@ def main():
                 if continue_choice == 'y':
                     break
                 
-                elif continue_choice == 'n':
+                elif continue_choice == 'i':
                     collection, balance, outcome = open_inventory_menu(collection, balance)
                     if outcome == "exit":
                         print("Exiting the simulator. Goodbye!")
