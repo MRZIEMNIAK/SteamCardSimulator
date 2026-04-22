@@ -35,6 +35,7 @@ def calculate_progress(dropped_cards, total_cards):
     return (len(dropped_cards) / total_cards) * 100
 
 
+
 def calculate_game_progress(collection, game):
     # Calculate progress for a specific game
     game_card_names = {card['name'] for card in game['cards'] + game['rare_cards']}
